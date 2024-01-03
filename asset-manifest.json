@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/FlickSearcher/static/css/main.89645d2f.css",
+    "main.js": "/FlickSearcher/static/js/main.6afe6c56.js",
+    "static/js/787.38f16daf.chunk.js": "/FlickSearcher/static/js/787.38f16daf.chunk.js",
+    "index.html": "/FlickSearcher/index.html",
+    "main.89645d2f.css.map": "/FlickSearcher/static/css/main.89645d2f.css.map",
+    "main.6afe6c56.js.map": "/FlickSearcher/static/js/main.6afe6c56.js.map",
+    "787.38f16daf.chunk.js.map": "/FlickSearcher/static/js/787.38f16daf.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.89645d2f.css",
+    "static/js/main.6afe6c56.js"
+  ]
+}
