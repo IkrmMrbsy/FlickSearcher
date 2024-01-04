@@ -1,13 +1,28 @@
+/* App.css */
+
+body {
+  overflow-x: hidden;
+}
+
 .App {
   text-align: center;
-  padding: 20px;
+}
+
+.Navbar {
+  background-color: white;
+  color: #03045e;
+  padding: 1rem;
+  font-size: 20px;
+  margin-bottom: 5rem;
+  width: 100%;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.4);
 }
 
 .Movie-search {
-  width: 300px;
+  width: 250px; 
   padding: 10px;
   margin-bottom: 20px;
-  border: 2px solid #3498db;
+  border: 2px solid rgb(177, 175, 175);
   border-radius: 5px;
   font-size: 1rem;
   transition: all 0.3s ease-in-out;
@@ -15,10 +30,9 @@
 
 .Movie-search:focus {
   outline: none;
-  border-color: #2ecc71;
-  box-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
+  border-color: #023e8a;
+  box-shadow: 0 0 10px rgba(31, 77, 227, 0.5);
 }
-
 
 .Movie-container {
   display: flex;
@@ -27,9 +41,9 @@
 }
 
 .Movie-card {
-  background-color: #f1f1f1;
+  background-color: #03045e;
   margin: 10px;
-  padding: 20px;
+  padding: 15px; /* Adjusted padding for smaller screens */
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
@@ -49,11 +63,12 @@
 }
 
 .Movie-card:hover .Movie-image {
-  transform: scale(1.0); /* Ganti dengan faktor zoom yang diinginkan */
+  transform: scale(1.0);
 }
 
 .Movie-details {
   text-align: center;
+  color: white;
 }
 
 .Movie-title {
@@ -62,9 +77,9 @@
 }
 
 .Movie-date,
-.Movie-rate ,
-.Movie-genres{
-  font-size: 20px;
+.Movie-rate,
+.Movie-genres {
+  font-size: 16px; /* Adjusted font size for smaller screens */
   margin: 5px 0;
 }
 
@@ -72,10 +87,19 @@
   .Movie-card {
     width: calc(50% - 20px);
   }
+
+  .Navbar {
+    font-size: 18px; /* Adjusted font size for smaller screens */
+  }
 }
 
 @media (max-width: 400px) {
   .Movie-card {
     width: calc(100% - 20px);
+  }
+
+  .Navbar {
+    font-size: 16px; /* Adjusted font size for smaller screens */
+    margin-bottom: 60px;
   }
 }

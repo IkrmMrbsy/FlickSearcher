@@ -1,3 +1,4 @@
+// api.js
 import axios from "axios";
 
 export const getMovieList = async () => {
@@ -27,19 +28,17 @@ export const getMovieSearch = async (query) => {
     });
 
     const searchResults = response.data.results.map(async (movie) => {
-      // Dapatkan informasi tambahan untuk setiap film
       const detailsResponse = await axios.get(`${process.env.REACT_APP_BASEURL}/movie/${movie.id}`, {
         params: {
           api_key: process.env.REACT_APP_APIKEY,
+          append_to_response: "genres", // Include genres in the response
         },
       });
 
-      // Gabungkan informasi tambahan ke dalam objek film
       const movieDetails = detailsResponse.data;
       return { ...movie, ...movieDetails };
     });
 
-    // Tunggu semua permintaan untuk mendapatkan informasi tambahan selesai
     const resultsWithDetails = await Promise.all(searchResults);
 
     console.log({ searchResults: resultsWithDetails });

@@ -1,9 +1,7 @@
 // App.js
 import React, { useState, useEffect } from 'react';
-import { getMovieList, getMovieSearch, getMovieDetails } from './api';
+import { getMovieList, getMovieSearch } from './api';
 import './App.css';
-
-// ... (other imports)
 
 const App = () => {
   const [movieList, setMovieList] = useState([]);
@@ -42,8 +40,10 @@ const App = () => {
 
   return (
     <div className="App">
+      <nav className="Navbar">
+        <h1>FlickSearcher.</h1>
+      </nav>
       <header className="App-header">
-        <h1>FlickSearcher</h1>
         <input 
           placeholder="Search for a Movie" 
           className="Movie-search"
@@ -53,7 +53,6 @@ const App = () => {
         {error && <p>{error}</p>}
         <div className="Movie-container">
           {(searchResults.length > 0 ? searchResults : movieList).map((movie) => (
-            // Check if necessary data exists before rendering
             (movie.poster_path && movie.title && movie.release_date && movie.vote_average) && (
               <div key={movie.id} className="Movie-card">
                 <img className="Movie-image" src={`${process.env.REACT_APP_BASEIMGURL}${movie.poster_path}`} alt={movie.title}/>
@@ -61,6 +60,10 @@ const App = () => {
                   <h2 className="Movie-title">{movie.title}</h2>
                   <p className="Movie-date">Release Date: {movie.release_date}</p>
                   <p className="Movie-rate">Rating: {movie.vote_average}</p>
+                  {movie.genres && (
+          <p className="Movie-genres">Genres: {movie.genres.map((genre) => genre.name).join(', ')}</p>
+        )}
+                  {/* Add other details as needed */}
                 </div>
               </div>
             )
