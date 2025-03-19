@@ -49,16 +49,23 @@ const MovieDetail = () => {
         }
 
         // Fetch similar movies
-        const similarResponse = await axios.get(`${process.env.REACT_APP_BASEURL}/movie/${id}/similar`, {
+        const similarResponse = await axios.get(`${process.env.REACT_APP_BASEURL}/movie/${id}/recommendations`, {
           params: {
             api_key: process.env.REACT_APP_APIKEY,
             language: 'en-US',
-            page: 1
+            region: 'US', // Tambahkan region untuk rekomendasi lokal
+            page: 1,
+            sort_by: 'vote_count.desc' // Prioritaskan yang lebih populer
           },
         });
 
         if (similarResponse.data && similarResponse.data.results) {
-          setSimilarMovies(similarResponse.data.results.slice(0, 6)); // Limit to 6 similar movies
+          const filtered = similarResponse.data.results.filter(movie => 
+            movie.poster_path && // Hanya yang punya poster
+            movie.vote_average > 5 && // Minimum rating 5
+            movie.genre_ids.length > 0 // Pastikan punya genre
+          );
+          setSimilarMovies(filtered.slice(0, 8)); // Ambil 8 terbaik
         }
       } catch (error) {
         console.error('Error fetching movie details:', error);
