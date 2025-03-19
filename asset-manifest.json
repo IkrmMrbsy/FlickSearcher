@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/FlickSearcher/static/css/main.edc4af74.css",
+    "main.css": "/FlickSearcher/static/css/main.5dbbf63b.css",
     "main.js": "/FlickSearcher/static/js/main.f80b7b16.js",
     "static/js/453.ad6eb26e.chunk.js": "/FlickSearcher/static/js/453.ad6eb26e.chunk.js",
     "index.html": "/FlickSearcher/index.html",
-    "main.edc4af74.css.map": "/FlickSearcher/static/css/main.edc4af74.css.map",
+    "main.5dbbf63b.css.map": "/FlickSearcher/static/css/main.5dbbf63b.css.map",
     "main.f80b7b16.js.map": "/FlickSearcher/static/js/main.f80b7b16.js.map",
     "453.ad6eb26e.chunk.js.map": "/FlickSearcher/static/js/453.ad6eb26e.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.edc4af74.css",
+    "static/css/main.5dbbf63b.css",
     "static/js/main.f80b7b16.js"
   ]
 }
