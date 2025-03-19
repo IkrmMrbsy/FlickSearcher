@@ -10,13 +10,29 @@ export const getMovieList = async () => {
     });
 
     const movieList = response.data.results;
-    console.log({ movielist: movieList });
-    return movieList;
+
+    // Ambil detail genre untuk setiap film
+    const movieListWithGenres = await Promise.all(
+      movieList.map(async (movie) => {
+        const detailsResponse = await axios.get(`${process.env.REACT_APP_BASEURL}/movie/${movie.id}`, {
+          params: {
+            api_key: process.env.REACT_APP_APIKEY,
+            append_to_response: "genres",
+          },
+        });
+
+        return { ...movie, genres: detailsResponse.data.genres };
+      })
+    );
+
+    console.log({ movieListWithGenres });
+    return movieListWithGenres;
   } catch (error) {
     console.error('Error fetching movie list:', error);
     throw error;
   }
 };
+
 
 export const getMovieSearch = async (query) => {
   try {
@@ -31,7 +47,7 @@ export const getMovieSearch = async (query) => {
       const detailsResponse = await axios.get(`${process.env.REACT_APP_BASEURL}/movie/${movie.id}`, {
         params: {
           api_key: process.env.REACT_APP_APIKEY,
-          append_to_response: "genres", // Include genres in the response
+          append_to_response: "genres", 
         },
       });
 
