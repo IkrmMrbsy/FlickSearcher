@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useRef } from 'react';
 import { Star, Calendar, Clock, ArrowLeft, PlayCircle } from 'lucide-react';
@@ -8,6 +8,8 @@ import './MovieDetail.css';
 const MovieDetail = () => {
   const castContainerRef = useRef(null);
   const similarContainerRef = useRef(null);
+
+  const navigate = useNavigate();
 
   const scroll = (containerRef, direction) => {
     const container = containerRef.current;
@@ -160,10 +162,10 @@ const MovieDetail = () => {
           >
             <div className="backdrop-overlay">
               <div className="back-navigation">
-                <Link to="/" className="back-button">
-                  <ArrowLeft size={20} />
-                  Back
-                </Link>
+              <Link to="#" className="back-button" onClick={() => navigate(-1)}>
+                <ArrowLeft size={20} />
+                Back
+              </Link>
               </div>
             </div>
           </div>
