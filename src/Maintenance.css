@@ -34,7 +34,7 @@
 }
 
 .pulse-glow {
-    animation: glow-pulse 1.5s infinite alternate;
+    animation: glow-pulse 1.2s infinite alternate ease-in-out;
 }
 
 h1 {
@@ -58,7 +58,6 @@ h1 {
     margin-left: 5px;
     color: white;
 }
-
 
 .maintenance-actions {
     display: flex;
@@ -98,12 +97,16 @@ h1 {
 }
 
 @keyframes glow-pulse {
-    from {
+    0% {
         filter: drop-shadow(0 0 2px var(--light-blue));
-        opacity: 0.8;
+        opacity: 0.3;
     }
-    to {
-        filter: drop-shadow(0 0 8px var(--light-blue));
+    50% {
+        filter: drop-shadow(0 0 4px var(--light-blue));
+        opacity: 0.7;
+    }
+    100% {
+        filter: drop-shadow(0 0 12px var(--light-blue));
         opacity: 1;
     }
 }
