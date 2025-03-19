@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { getMovieList, getMovieSearch } from './api';
 import { Search, Star, Calendar, Menu, X } from 'lucide-react';
 import MovieDetail from './MovieDetail';
+import MaintenancePage from './MaintenancePage';
 import './App.css';
 
 const Home = () => {
@@ -13,8 +14,13 @@ const Home = () => {
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isMaintenance = true; 
 
   useEffect(() => {
+    if (isMaintenance) {
+      return; // Jika mode maintenance aktif, hentikan proses fetch data
+    }
+
     const fetchData = async () => {
       try {
         const movies = await getMovieList();
@@ -27,7 +33,12 @@ const Home = () => {
     };
 
     fetchData();
-  }, []);
+  }, [isMaintenance]);
+
+  if (isMaintenance) {
+    return <MaintenancePage />; // Jika mode maintenance aktif, tampilkan halaman Maintenance
+  }
+  
 
   const search = async (query) => {
     setSearchQuery(query);

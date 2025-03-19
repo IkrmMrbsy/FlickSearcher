@@ -1,0 +1,127 @@
+.maintenance-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: var(--gradient-blue);
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.maintenance-card {
+    background-color: var(--card-bg-color);
+    border-radius: var(--border-radius);
+    padding: 3rem 2rem;
+    box-shadow: var(--box-shadow);
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.maintenance-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.maintenance-icon {
+    color: var(--light-blue);
+    transition: all 0.8s ease;
+}
+
+.pulse-glow {
+    animation: glow-pulse 1.5s infinite alternate;
+}
+
+h1 {
+    font-size: 1.8rem;
+    margin: 0;
+    color: white;
+}
+
+.main-text {
+    color: var(--light-blue);
+    line-height: 1.6;
+}
+
+.estimated-time {
+    color: var(--light-blue);
+    font-weight: 500;
+    margin-top: 1rem;
+}
+
+.estimated-time span {
+    margin-left: 5px;
+    color: white;
+}
+
+
+.maintenance-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.refresh-button, .back-button {
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--border-radius);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.refresh-button {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.back-button {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.maintenance-footer {
+    margin-top: 3rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+@keyframes glow-pulse {
+    from {
+        filter: drop-shadow(0 0 2px var(--light-blue));
+        opacity: 0.8;
+    }
+    to {
+        filter: drop-shadow(0 0 8px var(--light-blue));
+        opacity: 1;
+    }
+}
+
+@media (max-width: 480px) {
+    .maintenance-card {
+        padding: 2rem 1.5rem;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+    }
+    
+    .maintenance-actions {
+        flex-direction: column;
+    }
+    
+    .refresh-button, .back-button {
+        justify-content: center;
+    }
+}
