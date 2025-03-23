@@ -23,6 +23,7 @@ const MovieDetail = () => {
 
         const similar = await getSimilarMovies(id);
         setSimilarMovies(similar);
+
       } catch (error) {
         setError('Error loading movie details. Please try again later.');
       } finally {
@@ -32,6 +33,8 @@ const MovieDetail = () => {
 
     fetchMovieDetails();
   }, [id]);
+
+  
 
   const formatRuntime = (minutes) => {
     if (!minutes) return 'N/A';
@@ -190,6 +193,18 @@ const MovieDetail = () => {
                           <Star size={14} className="star-icon" />
                           <span>{similarMovie.vote_average?.toFixed(1)}</span>
                         </div>
+                        <div className="movie-genres">
+  {similarMovie.genres && similarMovie.genres.length > 0 ? (
+    similarMovie.genres.slice(0, 2).map((genre, index) => (
+      <span key={index} className="genre-tag">
+        {genre.name} {/* Sekarang langsung pakai genre.name */}
+      </span>
+    ))
+  ) : (
+    <span className="genre-tag">Unknown</span>
+  )}
+</div>
+
                       </div>
                     </Link>
                   ))}
