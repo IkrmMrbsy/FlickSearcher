@@ -34,8 +34,6 @@ const MovieDetail = () => {
     fetchMovieDetails();
   }, [id]);
 
-  
-
   const formatRuntime = (minutes) => {
     if (!minutes) return 'N/A';
     const hours = Math.floor(minutes / 60);
@@ -165,6 +163,32 @@ const MovieDetail = () => {
               </div>
             </div>
 
+            {/* Movie Cast */}
+            {movie.credits && movie.credits.cast && movie.credits.cast.length > 0 && (
+              <div className="movie-cast-section">
+                <h3 className="section-title">Cast</h3>
+                <div className="cast-container">
+                  {movie.credits.cast.slice(0, 10).map((actor) => (
+                    <div key={actor.id} className="cast-card">
+                      <div className="cast-image">
+                        <img
+                          src={actor.profile_path 
+                            ? `${process.env.REACT_APP_BASEIMGURL}${actor.profile_path}`
+                            : 'https://via.placeholder.com/150'} 
+                          alt={actor.name}
+                        />
+                      </div>
+                      <div className="cast-info">
+                        <h4>{actor.name}</h4>
+                        <p>{actor.character}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Similar Movies */}
             {similarMovies.length > 0 && (
               <div className="similar-movies-section">
                 <h3 className="section-title">More like this</h3>
@@ -194,19 +218,40 @@ const MovieDetail = () => {
                           <span>{similarMovie.vote_average?.toFixed(1)}</span>
                         </div>
                         <div className="movie-genres">
-  {similarMovie.genres && similarMovie.genres.length > 0 ? (
-    similarMovie.genres.slice(0, 2).map((genre, index) => (
-      <span key={index} className="genre-tag">
-        {genre.name} {/* Sekarang langsung pakai genre.name */}
-      </span>
-    ))
-  ) : (
-    <span className="genre-tag">Unknown</span>
-  )}
-</div>
-
+                          {similarMovie.genres && similarMovie.genres.length > 0 ? (
+                            similarMovie.genres.slice(0, 2).map((genre, index) => (
+                              <span key={index} className="genre-tag">
+                                {genre.name}
+                              </span>
+                            ))
+                          ) : (
+                            <span className="genre-tag">Unknown</span>
+                          )}
+                        </div>
                       </div>
                     </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Production Companies */}
+            {movie.production_companies && movie.production_companies.length > 0 && (
+              <div className="production-section">
+                <h3 className="section-title">Production Companies</h3>
+                <div className="production-companies">
+                  {movie.production_companies.map((company) => (
+                    <div key={company.id} className="company-item">
+                      {company.logo_path ? (
+                        <img
+                          src={`${process.env.REACT_APP_BASEIMGURL}${company.logo_path}`}
+                          alt={company.name}
+                          className="company-logo"
+                        />
+                      ) : (
+                        <span className="company-name-only">{company.name}</span>
+                      )}
+                    </div>
                   ))}
                 </div>
               </div>

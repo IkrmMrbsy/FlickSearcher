@@ -75,15 +75,29 @@ export const getMovieSearch = async (query) => {
 export const getMovieDetails = async (id) => {
     const response = await tmdbApi.get(`/movie/${id}`, {
         params: {
-            append_to_response: 'videos,credits',
+            append_to_response: 'videos,credits,production_companies',
         },
     });
-    return response.data
+
+    return {
+        id: response.data.id,
+        title: response.data.title,
+        poster_path: response.data.poster_path,
+        backdrop_path: response.data.backdrop_path,
+        vote_average: response.data.vote_average,
+        release_date: response.data.release_date,
+        tagline: response.data.tagline,
+        overview: response.data.overview,
+        runtime: response.data.runtime,
+        genres: response.data.genres,
+        credits: response.data.credits,
+        production_companies: response.data.production_companies || []
+    };
 };
 
 export const getSimilarMovies = async (id) => {
     const response = await tmdbApi.get(`/movie/${id}/similar`);
-    const genres = await fetchGenres(tmdbApi); // Ambil daftar genre
+    const genres = await fetchGenres(tmdbApi);
 
     return response.data.results.map(movie => ({
         ...movie,
