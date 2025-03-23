@@ -271,6 +271,7 @@ a {
   overflow: hidden;
   text-overflow: ellipsis;
   height: 2.8rem;
+  color: #e7e7e7 ;
 }
 
 .movie-meta {
