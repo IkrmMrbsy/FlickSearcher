@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { getMovieList, getMovieSearch, getMovieHeroDetails, getTrendingMovies } from '../../application/services/MovieService';
+import { getMovieList, getMovieSearch, getMovieHeroDetails, getTrendingMovies, getUpcomingMovies, getNowPlayingMovies } from '../../application/services/MovieService';
 import MovieCard from '../components/MovieCard';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -16,44 +16,46 @@ const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [trendingMovies, setTrendingMovies] = useState([]);
+  const [upcomingMovies, setUpcomingMovies] = useState([]);
+  const [nowPlayingMovies, setNowPlayingMovies] = useState([]); // State untuk now playing movies
 
-  // ✅ Fungsi untuk ke slide berikutnya
+  // Fungsi untuk ke slide berikutnya
   const goToNextSlide = useCallback(() => {
     if (isTransitioning || trendingMovies.length === 0) return;
-  
+
     setIsTransitioning(true);
     setCurrentIndex((prevIndex) => 
       prevIndex === trendingMovies.length - 1 ? 0 : prevIndex + 1
     );
-  
+
     setTimeout(() => {
       setIsTransitioning(false);
     }, 600);
   }, [isTransitioning, trendingMovies.length]);
 
-  // ✅ Auto-slide setiap 8 detik
+  // Auto-slide setiap 8 detik
   useEffect(() => {
     const interval = setInterval(() => {
       goToNextSlide();
     }, 10000);
 
     return () => clearInterval(interval);
-  }, [goToNextSlide]); 
+  }, [goToNextSlide]);
 
   const goToPrevSlide = useCallback(() => {
     if (isTransitioning || trendingMovies.length === 0) return;
 
-  setIsTransitioning(true);
-  setCurrentIndex((prevIndex) => 
-    prevIndex === 0 ? trendingMovies.length - 1 : prevIndex - 1
-  );
+    setIsTransitioning(true);
+    setCurrentIndex((prevIndex) => 
+      prevIndex === 0 ? trendingMovies.length - 1 : prevIndex - 1
+    );
 
-  setTimeout(() => {
-    setIsTransitioning(false);
-  }, 600);
-}, [isTransitioning, trendingMovies.length]);
+    setTimeout(() => {
+      setIsTransitioning(false);
+    }, 600);
+  }, [isTransitioning, trendingMovies.length]);
 
-  // ✅ Fungsi untuk klik indikator slider
+  // Fungsi untuk klik indikator slider
   const handleIndicatorClick = useCallback((index) => {
     if (isTransitioning || index === currentIndex) return;
 
@@ -74,6 +76,12 @@ const Home = () => {
         const movies = await getMovieList();
         setMovieList(movies);
 
+        const upcoming = await getUpcomingMovies();
+        setUpcomingMovies(upcoming);
+
+        const nowPlaying = await getNowPlayingMovies(); // Ambil data now playing movies
+        setNowPlayingMovies(nowPlaying);
+
         if (trending.length > 0) {
           const hero = await getMovieHeroDetails(movies[0].id);
           setHeroMovie(hero);
@@ -88,7 +96,7 @@ const Home = () => {
     fetchData();
   }, []);
 
-  // ✅ Fungsi pencarian
+  // Fungsi pencarian
   const search = async (query) => {
     setSearchQuery(query);
     if (query.trim() === '') {
@@ -111,26 +119,42 @@ const Home = () => {
     <>
       <Navbar searchQuery={searchQuery} onSearch={search} />
       <main className="main-content">
-         {/* HeroSection dengan Slider */}
-      {movieList.length > 0 && (
-        <HeroSection
-          heroMovie={heroMovie}
-          movies={trendingMovies}
-          currentIndex={currentIndex}
-          goToNextSlide={goToNextSlide}
-          goToPrevSlide={goToPrevSlide}
-          handleIndicatorClick={handleIndicatorClick}
-        />
-      )}
+        {/* HeroSection dengan Slider */}
+        {movieList.length > 0 && (
+          <HeroSection
+            heroMovie={heroMovie}
+            movies={trendingMovies}
+            currentIndex={currentIndex}
+            goToNextSlide={goToNextSlide}
+            goToPrevSlide={goToPrevSlide}
+            handleIndicatorClick={handleIndicatorClick}
+          />
+        )}
         <div className="content-container">
           <h2 className="content-title">
             {searchResults.length > 0 ? 'Search Results' : 'Popular Movies'}
           </h2>
           {loading && <p>Loading...</p>}
           {error && <p>{error}</p>}
-          <div className="movie-grid">
+          <div className="horizontal-scroll-container">
             {(searchResults.length > 0 ? searchResults : movieList).map((movie) => (
               <MovieCard key={movie.id} movie={movie} />
+            ))}
+          </div>
+
+          {/* Tambahkan section untuk Now Playing Movies */}
+          <h2 className="content-title">Now Playing</h2>
+          <div className="horizontal-scroll-container">
+            {nowPlayingMovies.map((movie) => (
+              <MovieCard key={movie.id} movie={movie} />
+            ))}
+          </div>
+
+          {/* Tambahkan section untuk Upcoming Movies */}
+          <h2 className="content-title">Upcoming Movies</h2>
+          <div className="horizontal-scroll-container">
+            {upcomingMovies.map((movie) => (
+              <MovieCard key={movie.id} movie={movie} isUpcoming={true} />
             ))}
           </div>
         </div>
