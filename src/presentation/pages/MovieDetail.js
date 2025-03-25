@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { Star, Calendar, Clock, ArrowLeft, PlayCircle } from 'lucide-react';
 import { getMovieDetails, getSimilarMovies } from '../../application/services/MovieService';
+import Footer from '../components/Footer';
 import '../../styles/MovieDetail.css';
 
 const MovieDetail = () => {
@@ -259,6 +260,9 @@ const MovieDetail = () => {
           </div>
         </>
       )}
+      
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };
