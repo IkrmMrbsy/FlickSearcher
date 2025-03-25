@@ -91,8 +91,50 @@ export const getMovieDetails = async (id) => {
         runtime: response.data.runtime,
         genres: response.data.genres,
         credits: response.data.credits,
+        videos: response.data.videos, // Sertakan videos
         production_companies: response.data.production_companies || []
     };
+};
+
+export const getUpcomingMovies = async () => {
+    const response = await tmdbApi.get('/movie/upcoming');
+    const genres = await fetchGenres(tmdbApi);
+
+    const today = new Date().toISOString().split('T')[0]; // Ambil tanggal hari ini
+
+    return response.data.results
+        .filter(movie => movie.poster_path && movie.release_date > today) // Hanya film dengan poster & belum rilis
+        .map(movie => {
+            const movieGenres = movie.genre_ids
+                .map(id => genres.find(g => g.id === id))
+                .filter(Boolean); // Filter genre yang valid
+            return {
+                ...movie,
+                genres: movieGenres,
+            };
+        });
+};
+
+export const getNowPlayingMovies = async () => {
+    const response = await tmdbApi.get('/movie/now_playing');
+    const genres = await fetchGenres(tmdbApi);
+
+    const today = new Date().toISOString().split('T')[0]; // Ambil tanggal hari ini
+
+    return response.data.results
+        .filter(movie => 
+            movie.poster_path && // Hanya film dengan poster
+            movie.release_date <= today // Hanya film yang sudah rilis
+        )
+        .map(movie => {
+            const movieGenres = movie.genre_ids
+                .map(id => genres.find(g => g.id === id))
+                .filter(Boolean); // Filter genre yang valid
+            return {
+                ...movie,
+                genres: movieGenres,
+            };
+        });
 };
 
 export const getSimilarMovies = async (id) => {
